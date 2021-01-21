@@ -1,7 +1,7 @@
 # histogram
 
 - histograms in 1d 2d, and 3d can be made quickly in terminal.
-- For computational chemistry, free energy in 1d 2d, and 3d can be also made
+- For computational chemistry, free energy profile is also made
 
 ## how to install 
 
@@ -16,13 +16,13 @@
 
 ## how to use
 
-- data are supplied from standard input and options are specified in command line argument. 
-- to make a histogram of the second column of data.txt from 1 to 100 with binwidth 5, for example, execute
+- data are supplied from the standard input and options are specified in the command line argument. 
+- to make a (one-dimensional) histogram of the second column of data.txt from 1 to 100 with binwidth 5, for example, execute
 ```
 cat data.txt  | awk '{print $2}'  \
-/path_to/histogram1d --max 100 --min 1 --dx 5 --fout_prefix prefix  
+/path_to/histogram1d --max 100 --min 1 --dx 5 --fout_prefix prefix_of_filename  
 ```
-- For the aim of computational chemistry, free energy profile converted from the histogram is also output. 
+- For computational chemists, the free energy profile, converted from the histogram, will be also created. 
 
 - for details, check `/path_to/histogram1d  --help`
 
