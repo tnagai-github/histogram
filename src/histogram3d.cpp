@@ -265,8 +265,8 @@ int main(int argc, char *argv[])
   for(int i= 0; i<nbins[0];i++){
     for(int j= 0; j<nbins[1];j++){
       for(int k= 0; k<nbins[2];k++){
-        ofs_hist << boost::format("%10.5f %10.5f %10.5f %12.6g %12d\n") % (edges[0][i]+0.5*dx[0]) % (edges[1][j]+0.5*dx[1]) % (edges[2][j]+0.5*dx[2]) % pdf[i][j]  %counts[i][j] ;
-        ofs_FE   << boost::format("%10.5f %10.5f %10.5f %12.6g\n")      % (edges[0][i]+0.5*dx[0]) % (edges[1][j]+0.5*dx[1]) % (edges[2][j]+0.5*dx[2]) % free_energy[i][j] ;
+        ofs_hist << boost::format("%10.5f %10.5f %10.5f %12.6g %12d\n") % (edges[0][i]+0.5*dx[0]) % (edges[1][j]+0.5*dx[1]) % (edges[2][k]+0.5*dx[2]) % pdf[i][j][k]  %counts[i][j][k] ;
+        ofs_FE   << boost::format("%10.5f %10.5f %10.5f %12.6g\n")      % (edges[0][i]+0.5*dx[0]) % (edges[1][j]+0.5*dx[1]) % (edges[2][k]+0.5*dx[2]) % free_energy[i][j][k] ;
       }
     }
   }
