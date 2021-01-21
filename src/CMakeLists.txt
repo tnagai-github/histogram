@@ -3,8 +3,8 @@ cmake_minimum_required(VERSION 3.1)
 project(histograms)
 enable_language(CXX)
 
-set(CMAKE_CXX_STANDARD 14) # C++14...
-set(CMAKE_CXX_STANDARD_REQUIRED ON) #...is required...
+set(CMAKE_CXX_STANDARD 14) 
+set(CMAKE_CXX_STANDARD_REQUIRED ON) 
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 
@@ -30,7 +30,6 @@ include_directories(${PRETTYPRINT})
 find_package(Boost  REQUIRED COMPONENTS program_options)
 include_directories(${Boost_INCLUDE_DIRS})
 
-# a.outという実行ファイルをmain.cppとhello.cppから作成
 add_executable(histogram1d  histogram1d.cpp)
 add_executable(histogram2d  histogram2d.cpp)
 add_executable(histogram3d  histogram3d.cpp)
