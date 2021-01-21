@@ -1,3 +1,7 @@
+/* 
+ * Copyright (c) 2021, Tetsuro Nagai
+ */
+
 #include <iostream>
 #include <fstream>
 #include <vector>
