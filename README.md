@@ -4,11 +4,11 @@
 
 ## how to install 
 
-- <https://github.com/louisdx/cxx-prettyprint/pulls> and boost are used.
-- cmake is used and thus follow the ordinary procedure with cmake 
-  - make a directory such as build
+- <https://github.com/louisdx/cxx-prettyprint/> and boost are used.
+- cmake is used and thus you may follow the ordinary procedure with cmake 
+  - make a directory for example named build
   - `mv build`
-  - `cmake  -DPRETTYPRINT=/path_to/cxx-prettyprint/ ../src && make `
+  - `cmake  -DPRETTYPRINT=/path_to/cxx-prettyprint/ path_to/src && make `
 
 - you will get three executables, namely, histogram1d, histogram2d, and histogram3d
 
