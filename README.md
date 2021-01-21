@@ -1,6 +1,6 @@
 # histogram
 
-- histograms in 1d 2d, and 3d can be made quickly in terminal.
+- histograms in 1d 2d, and 3d can be made quickly.
 - For computational chemistry, free energy profile is also made
 
 ## how to install 
