@@ -131,6 +131,7 @@ int main(int argc, char *argv[])
   vector<double>  edges(nbins+1,0);
   vector<int>     counts(nbins);
   vector<double>  pdf(nbins);
+  vector<double>  pdferr(nbins);
   vector<double>  free_energy(nbins);
   
   for (int i = 0 ; i < nbins+1; i++){
@@ -198,6 +199,8 @@ int main(int argc, char *argv[])
 
   for(int i=0; i < nbins; i++){
     pdf[i] = counts[i]/double(ncounts)/dx;
+    pdferr[i] = std::sqrt((counts[i]/double(ncounts))*(1.0-counts[i]/double(ncounts))/double(ncounts)); //based on binary dist
+    pdferr[i] /= dx; 
     free_energy[i] = -kB_kJ_per_mol*T*std::log(pdf[i]);
   }
 
@@ -212,7 +215,7 @@ int main(int argc, char *argv[])
 
 
   for(int i= 0; i<nbins;i++){
-  ofs_hist << boost::format("%10.5f %12.6g %12d\n") % (edges[i]+0.5*dx) % pdf[i]  %counts[i] ;
+  ofs_hist << boost::format("%10.5f %12.6g %12.6g %12d\n") % (edges[i]+0.5*dx) % pdf[i]  %pdferr[i] %counts[i] ;
   ofs_FE << boost::format("%10.5f %12.6g\n") % (edges[i]+0.5*dx) % free_energy[i] ;
   }
   ofs_hist.close();
