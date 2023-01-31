@@ -44,6 +44,8 @@ int main(int argc, char *argv[])
   double min,max,dx, T;
   string fout_prefix;
   bool bStrict;
+  bool bHistogram;
+  bool bFreeEnergy;
   
   // making command line options
   po::options_description opt("generic histogram and free energy. Data should be supplemented from the standard input; the first column will be analysed.");
@@ -53,8 +55,10 @@ int main(int argc, char *argv[])
     ("min"     ,     po::value<double>()->default_value(-10),    "min of histogram")
     ("max"     ,     po::value<double>()->default_value(10),     "max of histogram")
     ("T"     ,       po::value<double>()->default_value(300),     "temperature for free energy convertion")
-    ("bStrictOutOfRange"   , po::value<bool>()->default_value(false),     "if true, abort when a sample out of min and max is found")
-    ("fout_prefix",  po::value<string>(),                         "fout_prefix, a number of files will be made with this prefix");
+    ("bStrictOutOfRange"   , po::value<bool>()->default_value(false),  "if true, abort when a sample out of min and max is found")
+    ("bHistogram",  po::value<bool>()->default_value(true),            "if true, histogram will be made") 
+    ("bFreeEnergy", po::value<bool>()->default_value(false),           "if true, free energy profile will be made") 
+    ("fout_prefix", po::value<string>(),                         "fout_prefix, a number of files will be made with this prefix");
   
   // analyze argc and argv and results are stored in vm
   try{
@@ -78,6 +82,8 @@ int main(int argc, char *argv[])
       max = vm["max"].as<double>();
       T = vm["T"].as<double>();
       bStrict = vm["bStrictOutOfRange"].as<bool>();
+      bHistogram = vm["bHistogram"].as<bool>();
+      bFreeEnergy = vm["bFreeEnergy"].as<bool>();
       fout_prefix = vm["fout_prefix"].as<string>();
 		}
 	}	
@@ -105,19 +111,25 @@ int main(int argc, char *argv[])
 	const string fname_hist = fout_prefix+"_hist.dat";
 	const string fname_FE   = fout_prefix+"_free_energy.dat";
 
-  cout << "Files to be created: " << fname_hist << endl;
-  cout << "Files to be created: " << fname_FE  << endl;
 
-  std::ofstream ofs_hist(fname_hist.c_str());
-  std::ofstream ofs_FE(fname_FE.c_str());
-
-  if(!ofs_hist){
-    cerr << "cannot open " << fname_hist << endl;
-    return -1;
+  std::ofstream ofs_hist;
+  if(bHistogram){
+    cout << "Files to be created: " << fname_hist << endl;
+    ofs_hist.open(fname_hist.c_str());
+    if(!ofs_hist){
+      cerr << "cannot open " << fname_hist << endl;
+      return -1;
+    }
   }
-  if(!ofs_FE){
-    cerr << "cannot open " << fname_FE << endl;
-    return -1;
+
+  std::ofstream ofs_FE;
+  if(bFreeEnergy){
+    cout << "Files to be created: " << fname_FE  << endl;
+    ofs_FE.open(fname_FE.c_str());
+    if(!ofs_FE){
+      cerr << "cannot open " << fname_FE << endl;
+      return -1;
+    }
   }
 
 
@@ -210,15 +222,19 @@ int main(int argc, char *argv[])
     v1 -= min_free_energy;
   }
 
-  cout << counts << endl;
-  cout << free_energy << endl;
+  //cout << counts << endl;
+  //if(bFreeEnergy)
+  //  cout << free_energy << endl;
 
 
   for(int i= 0; i<nbins;i++){
-  ofs_hist << boost::format("%10.5f %12.6g %12.6g %12d\n") % (edges[i]+0.5*dx) % pdf[i]  %pdferr[i] %counts[i] ;
-  ofs_FE << boost::format("%10.5f %12.6g\n") % (edges[i]+0.5*dx) % free_energy[i] ;
+    ofs_hist << boost::format("%10.5f %12.6g %12.6g %12d\n") % (edges[i]+0.5*dx) % pdf[i]  %pdferr[i] %counts[i] ;
   }
   ofs_hist.close();
+
+  for(int i= 0; i<nbins;i++){
+    ofs_FE << boost::format("%10.5f %12.6g\n") % (edges[i]+0.5*dx) % free_energy[i] ;
+  }
   ofs_FE.close();
 
   return EXIT_SUCCESS ;

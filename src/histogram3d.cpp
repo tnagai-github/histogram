@@ -154,9 +154,9 @@ int main(int argc, char *argv[])
   vector< vector<vector<double>>> pdf(nbins[0],vector<vector<double>>(nbins[1],vector<double>(nbins[2], 0.0)));
   vector<vector<vector<double>>> free_energy(nbins[0],vector<vector<double>>(nbins[1],vector<double>(nbins[2], 0.0)));
   
-  edges.push_back(vector<double>(nbins[0],0));
-  edges.push_back(vector<double>(nbins[1],0));
-  edges.push_back(vector<double>(nbins[2],0));
+  edges.push_back(vector<double>(nbins[0]+1,0));
+  edges.push_back(vector<double>(nbins[1]+1,0));
+  edges.push_back(vector<double>(nbins[2]+1,0));
   for (int i = 0 ; i < DIM_HIST; i++){
     for (int j = 0 ; j < nbins[i]+1; j++){
       edges[i][j] = min[i] + dx[i]*j ;
